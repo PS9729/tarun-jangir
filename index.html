@@ -635,7 +635,7 @@
             border-bottom: none;
         }
         
-        /* ===== CONTACT SECTION ===== */
+        /* ===== UPDATED CONTACT SECTION ===== */
         .contact {
             background: var(--mitra-white);
         }
@@ -685,6 +685,143 @@
             padding: 40px;
             border-radius: 8px;
             box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* UPI QR Code Section */
+        .upi-qr-section {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            margin-top: 30px;
+            border: 2px solid var(--mitra-green);
+        }
+        
+        .upi-qr-section h3 {
+            color: var(--mitra-blue);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .qrcode-placeholder {
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            background: var(--mitra-light-gray);
+            border: 2px dashed var(--mitra-blue);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--mitra-gray);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .qrcode-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: var(--mitra-blue);
+        }
+        
+        .qrcode-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: none;
+        }
+        
+        .qrcode-placeholder.active img {
+            display: block;
+        }
+        
+        .qrcode-placeholder.active i,
+        .qrcode-placeholder.active span {
+            display: none;
+        }
+        
+        .upi-details {
+            margin-top: 20px;
+            padding: 15px;
+            background: var(--mitra-light-gray);
+            border-radius: 5px;
+            border-left: 4px solid var(--mitra-orange);
+        }
+        
+        .upi-details p {
+            margin: 8px 0;
+            color: var(--mitra-blue);
+            font-weight: 500;
+        }
+        
+        /* Shop Photo Section */
+        .shop-photo-section {
+            margin-top: 30px;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            border: 2px solid var(--mitra-orange);
+        }
+        
+        .shop-photo-section h3 {
+            color: var(--mitra-blue);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .shop-photo {
+            width: 100%;
+            height: 300px;
+            background: var(--mitra-light-gray);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            position: relative;
+            border: 2px solid #ddd;
+        }
+        
+        .shop-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .shop-photo:hover img {
+            transform: scale(1.05);
+        }
+        
+        .photo-upload-btn {
+            background: var(--mitra-blue);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .photo-upload-btn:hover {
+            background: var(--mitra-orange);
+            transform: translateY(-3px);
         }
         
         .form-group {
@@ -946,6 +1083,15 @@
             
             .tab-btn {
                 width: 100%;
+            }
+            
+            .qrcode-placeholder {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .shop-photo {
+                height: 200px;
             }
         }
     </style>
@@ -1367,7 +1513,7 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- UPDATED Contact Section with UPI QR and Shop Photo -->
     <section id="contact" class="contact">
         <div class="container">
             <div class="section-title">
@@ -1420,8 +1566,34 @@
                             <small>Scan QR code at center for payment</small>
                         </div>
                     </div>
-                </div> 
-                    </form>
+                </div>
+                
+                <!-- Right Side: Contact Form + UPI QR + Shop Photo -- 
+                    
+                    <!-- UPI QR Code Section -->
+                    <div class="upi-qr-section">
+                        <h3><i class="fas fa-rupee-sign"></i> UPI Payment QR Code</h3>
+                        <div class="hindi">यूपीआई भुगतान क्यूआर कोड</div>
+                        
+                        <div class="qrcode-placeholder" id="upiQrCode" onclick="uploadUPIQR()">
+                            <i class="fas fa-qrcode"></i>
+                            <span>Click to upload UPI QR Code</span>
+                            <img id="upiQrImage" src="" alt="UPI QR Code">
+                            <input type="file" id="upiQrInput" accept="image/*" style="display: none;" onchange="handleUPIQRUpload(event)">
+                        </div>
+                        
+                        <div class="upi-details">
+                            <p><i class="fas fa-user"></i> Name: Tarun Kumar</p>
+                            <p><i class="fas fa-mobile-alt"></i> UPI ID: tarun.emitra@okhdfcbank</p>
+                            <p><i class="fas fa-bank"></i> Bank: HDFC Bank</p>
+                        </div>
+                        
+                        <button class="btn btn-green" onclick="copyUPIID()" style="margin-top: 15px; padding: 10px 25px;">
+                            <i class="fas fa-copy"></i> Copy UPI ID
+                        </button>
+                    </div>
+                    
+                    </div>
                 </div>
             </div>
         </div>
@@ -1470,7 +1642,7 @@
                         <li><i class="far fa-clock"></i> Monday - Saturday: 9:00 AM - 8:00 PM</li>
                         <li><i class="far fa-clock"></i> Sunday: 10:00 AM - 4:00 PM</li>
                         <li><i class="fas fa-holiday"></i> Public Holidays: 10:00 AM - 2:00 PM</li>
-                        <li><i class="fas fa-map-marker-alt"></i> Shop No. 42, Gandhi Nagar, Jaipur</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Shop No. 0, Near kali mata mandir, ward no 14, rawla</li>
                     </ul>
                 </div>
             </div>
@@ -1718,7 +1890,7 @@
         
         // ===== SERVICE BOOKING =====
         function bookService(serviceName) {
-            alert(`Service Booking: ${serviceName}\n\nPlease visit our center with required documents or call +91 98290 12345 for appointment.`);
+            alert(`Service Booking: ${serviceName}\n\nPlease visit our center with required documents or call +91 75686 48396 for appointment.`);
             closeServiceModal();
         }
         
@@ -1766,6 +1938,91 @@
             }, 1500);
             
             return false;
+        }
+        
+        // ===== UPI QR CODE FUNCTIONS =====
+        function uploadUPIQR() {
+            document.getElementById('upiQrInput').click();
+        }
+        
+        function handleUPIQRUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const upiQrImage = document.getElementById('upiQrImage');
+                    const upiQrCode = document.getElementById('upiQrCode');
+                    
+                    upiQrImage.src = e.target.result;
+                    upiQrCode.classList.add('active');
+                    
+                    // Save to localStorage
+                    localStorage.setItem('harshita_upi_qr', e.target.result);
+                    
+                    alert('UPI QR Code uploaded successfully!');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        function copyUPIID() {
+            const upiID = 'tarun.emitra@okhdfcbank';
+            navigator.clipboard.writeText(upiID)
+                .then(() => {
+                    alert('UPI ID copied to clipboard: ' + upiID);
+                })
+                .catch(err => {
+                    console.error('Failed to copy: ', err);
+                    // Fallback method
+                    const tempInput = document.createElement('input');
+                    tempInput.value = upiID;
+                    document.body.appendChild(tempInput);
+                    tempInput.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(tempInput);
+                    alert('UPI ID copied to clipboard: ' + upiID);
+                });
+        }
+        
+        // ===== SHOP PHOTO FUNCTIONS =====
+        function uploadShopPhoto() {
+            document.getElementById('shopPhotoInput').click();
+        }
+        
+        function handleShopPhotoUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const shopPhotoImage = document.getElementById('shopPhotoImage');
+                    shopPhotoImage.src = e.target.result;
+                    
+                    // Save to localStorage
+                    localStorage.setItem('harshita_shop_photo', e.target.result);
+                    
+                    alert('Shop photo uploaded successfully!');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        // ===== LOAD SAVED DATA FROM LOCALSTORAGE =====
+        function loadSavedData() {
+            // Load UPI QR Code
+            const savedUPIQR = localStorage.getItem('harshita_upi_qr');
+            if (savedUPIQR) {
+                const upiQrImage = document.getElementById('upiQrImage');
+                const upiQrCode = document.getElementById('upiQrCode');
+                upiQrImage.src = savedUPIQR;
+                upiQrCode.classList.add('active');
+            }
+            
+            // Load Shop Photo
+            const savedShopPhoto = localStorage.getItem('harshita_shop_photo');
+            if (savedShopPhoto) {
+                const shopPhotoImage = document.getElementById('shopPhotoImage');
+                shopPhotoImage.src = savedShopPhoto;
+            }
         }
         
         // ===== SMOOTH SCROLL =====
@@ -1847,6 +2104,9 @@
                 badge.style.animation = 'pulse 2s infinite';
             });
             
+            // Load saved data from localStorage
+            loadSavedData();
+            
             // Add CSS for pulse animation
             const style = document.createElement('style');
             style.textContent = `
@@ -1861,6 +2121,3 @@
     </script>
 </body>
 </html>
-
-
-
